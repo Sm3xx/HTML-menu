@@ -1,0 +1,63 @@
+@font-face {
+    font-family: "Sign-Painter";
+    src: url("SignPainter.ttf");
+}
+
+body {
+    margin: 0px;
+    color: white;
+    background-image: url('https://www.mifcom.de/blog/wp-content/uploads/2015/04/RSG_GTAV_PC_Screenshot_004.jpg');
+}
+
+h1, p, ul{
+    margin: 0px;
+    padding: 0px;
+}
+
+.menu {
+    margin: 10px;
+    max-width: 20%;
+}
+
+#menuHeader {
+    background: linear-gradient(165deg, #0b3c7b 30%, #2f69bb);
+    height: 65px;
+    line-height: 75px;
+    font-family: "Sign-Painter";
+    font-size: 25px;
+    text-align: center;
+}
+
+
+#shortDescription {
+    background: black;
+    color: #5db6e5;
+    font-family: Arial, Helvetica, sans-serif;
+    height: 30px;
+    line-height: 30px;
+    padding-left: 10px;
+}
+
+#menuContent {    
+    font-family: Arial;
+    background: linear-gradient(#000000ed 1%, #00000061);
+}
+
+#menuContent ul {
+    list-style: none;
+}
+
+#menuContent li {
+
+    height: 30px;
+    line-height: 30px;
+}
+
+#menuContent li>p {
+    padding-left: 10px;
+}
+
+.active {
+    background: linear-gradient(90deg, #efefef , #c7c7c7);
+    color: black;
+}
