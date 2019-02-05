@@ -2,6 +2,9 @@ var menu = new Menu("Test Menu", "Menu zum testen");
 
 menu.addItem(menu, "Item 1", {script: "test", event: "testevent"}, {test: 1});
 menu.addItem(menu, "Item 2", {script: "test", event: "testevent"}, {test: 2});
+let sub = menu.addSubMenu("SubMenu", "Testmenu");
+sub.addItem(sub, "SubItem 1", { script: "test", event: "testevent" }, { test: 2 });
+sub.addItem(sub, "SubItem 2", {script: "test", event: "testevent"}, {test: 2});
 
 menu.open();
 
@@ -13,9 +16,11 @@ window.onload = function(e) {
 
 
 document.onkeydown = (e) => {
-    const KEYS = {enter: 13, up: 38, down: 40}
+    const KEYS = {enter: 13, up: 38, down: 40, backspace: 8}
     var current = $('#menuContent ul li.active');
     var next;
+    let id = current.attr("id");
+    let item = menu.getItem(id);
 
     switch(e.keyCode) {
         case KEYS.up:
@@ -27,9 +32,11 @@ document.onkeydown = (e) => {
             break;
 
         case KEYS.enter: 
-            let id = current.attr("id");
-            let item = menu.getItem(id);
             item.onEnter();
+            return;
+
+        case KEYS.backspace:
+            item.parentMenu.open();
             return;
 
         default:

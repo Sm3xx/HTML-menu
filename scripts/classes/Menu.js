@@ -2,7 +2,6 @@ class Menu {
     constructor(title, desc) {
         this.items = [];
         this.id = createUniqueId(this);
-        this.menu;
         if (title && desc) {
             this.title = title;
             this.desc = desc;
@@ -29,20 +28,18 @@ class Menu {
         this.items.forEach(item => {
             $("#menuContent ul").append(item.element);
         });
-
-        if (!this.menu) {
-            this.menu = $('#menuContainer').html();
-        }
     }
 
     addItem(name, action, data) {
         let item = new MenuItem(name, action, data);
         this.items.push(item);
-        // this.render();
     }
 
-    addSubMenu(name, desc, this) {
-        
+    addSubMenu(name, desc) {
+        let menu = new SubMenu(name, desc, this);
+        let item = new MenuItem(this, "SubMenu", menu);
+        this.items.push(item);
+        return menu;
     }
 
     getItem(id) {

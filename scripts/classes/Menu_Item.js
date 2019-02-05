@@ -32,8 +32,8 @@ class MenuItem {
     }
 
     onEnter() {
-        if (this.action == "SubMenu") {
-            // 
+        if (typeof(this.action) == "object") {
+            this.action.open();
         } else {
             this.sendPost(this.action.script, this.action.event, this.data)
         }
