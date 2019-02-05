@@ -1,12 +1,9 @@
 class MenuItem {
-    constructor(menu, name, action, data) {
-        this.parentMenu = menu;
-        this.id = createUniqueId(menu)
+    constructor(name, submenu) {
+        this.id = createUniqueId()
         this.name = name;
-        this.action = action;
-        this.data = data;
-        this.element;
-        this.createNewItem()
+        this.element = this.createNewItem();
+        this.subToOpen = submenu;
     }
 
     createNewItem() {
@@ -18,31 +15,13 @@ class MenuItem {
 
         item.appendChild(p);
         item.id = this.id;
-        // this.appendItem(item)
 
-        if (this.parentMenu.items.length < 1) {
-            item.className = "active";
-        }
-
-        this.element = item;
-    }
-
-    appendItem(item) {
-        $("#menuContent ul").append(item)
+        return item;
     }
 
     onEnter() {
-        if (typeof(this.action) == "object") {
-            this.action.open();
-        } else {
-            this.sendPost(this.action.script, this.action.event, this.data)
+        if (this.subToOpen) {
+            mc.openMenu(this.subToOpen);
         }
-    }
-
-    sendPost (script, event, data) {
-        let url = `http://${script}/${event}`;
-        $.post(url, JSON.stringify({
-            data:   data
-        }));
     }
 }

@@ -1,50 +1,15 @@
-var menu = new Menu("Test Menu", "Menu zum testen");
+var menu = new Menu("Admin Menu", "Funktionen", "hp");
+var playerInteraction = menu.addSubMenu("Spieler Interaktion", "Spieler Interaktion", "Spieler Funktionen", "pi", menu.short);
+playerInteraction.addItem("Kick");
+var ban = playerInteraction.addSubMenu("Ban", "Spieler Bannen", "Spieler Bannen", "ban", playerInteraction.short)
+ban.addItem("Temp-Ban");
+ban.addItem("Perma-Ban");
+var commands = menu.addSubMenu("Commands", "Commands", "Commands", "cmd", menu.short)
+commands.addItem("Announce");
+commands.addItem("No Clip");
+menu.addItem("God-Mode");
 
-menu.addItem(menu, "Item 1", {script: "test", event: "testevent"}, {test: 1});
-menu.addItem(menu, "Item 2", {script: "test", event: "testevent"}, {test: 2});
-let sub = menu.addSubMenu("SubMenu", "Testmenu");
-sub.addItem(sub, "SubItem 1", { script: "test", event: "testevent" }, { test: 2 });
-sub.addItem(sub, "SubItem 2", {script: "test", event: "testevent"}, {test: 2});
-
-menu.open();
-
-window.onload = function(e) {
-    window.addEventListener('message', function(event) {
-      onData(event.data);
-    });
-  }
+mc.addMenu("hp", menu);
 
 
-document.onkeydown = (e) => {
-    const KEYS = {enter: 13, up: 38, down: 40, backspace: 8}
-    var current = $('#menuContent ul li.active');
-    var next;
-    let id = current.attr("id");
-    let item = menu.getItem(id);
-
-    switch(e.keyCode) {
-        case KEYS.up:
-            next = current.prev();
-            break;
-
-        case KEYS.down:
-            next = current.next();
-            break;
-
-        case KEYS.enter: 
-            item.onEnter();
-            return;
-
-        case KEYS.backspace:
-            item.parentMenu.open();
-            return;
-
-        default:
-            return;
-    }
-    
-    if (next.length > 0) {
-        $('#menuContent ul li').removeClass('active');
-        next.addClass('active');
-    }
-}
+mc.openMenu("hp");

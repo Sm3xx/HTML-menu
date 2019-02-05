@@ -1,19 +1,15 @@
 class Menu {
-    constructor(title, desc) {
+    constructor(title, desc, short) {
+        this.short = short;
         this.items = [];
         this.id = createUniqueId(this);
-        if (title && desc) {
-            this.title = title;
-            this.desc = desc;
-        } else {
-            if (!title && !desc) throw new Error("No Title and Description entered!")
-            if (!title) throw new Error("No Title entered!");
-            if (!desc) throw new Error("No Description entered!");
-        }
+        this.title = title;
+        this.desc = desc;
     }
 
     open() {
         this.render();
+        this.setFirstItemActive();
         $(`#${this.id}`).show();
     }
 
@@ -30,24 +26,33 @@ class Menu {
         });
     }
 
-    addItem(name, action, data) {
-        let item = new MenuItem(name, action, data);
+    addItem(name) {
+        let item = new MenuItem(name, null);
         this.items.push(item);
     }
 
-    addSubMenu(name, desc) {
-        let menu = new SubMenu(name, desc, this);
-        let item = new MenuItem(this, "SubMenu", menu);
+    addSubMenu(itemName, menuName, desc, short ,prevMenu) {
+        let sub = new Menu(menuName, desc, short);
+        sub.prev = prevMenu;
+        let item = new MenuItem(itemName, short);
         this.items.push(item);
-        return menu;
+        mc.addMenu(short, sub);
+        return sub;
     }
 
-    getItem(id) {
-        for (let key in menu.items) {
-            if (menu.items.hasOwnProperty(key)) {
-                if (menu.items[key].id == id) {
-                    return menu.items[key];
-                }
+    setFirstItemActive() {
+        let items = this.items;
+        for (let i=0; i<items.length; i++) {
+            items[i].element.className = "";
+        }
+        items[0].element.className = "active";
+    }
+
+    getSelectedItem() {
+        for (let i=0; i<this.items.length; i++) {
+            let item = this.items[i];
+            if (item.element.className === "active") {
+                return item;
             }
         }
     }
